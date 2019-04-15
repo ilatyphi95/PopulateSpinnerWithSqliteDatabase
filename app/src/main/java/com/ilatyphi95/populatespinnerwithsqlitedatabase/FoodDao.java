@@ -13,7 +13,7 @@ public interface FoodDao {
     @Insert
     void insert(Food food);
 
-    @Query("SELECT * FROM food ORDER BY food_type ASC")
+    @Query("SELECT * FROM food ORDER BY food_name ASC")
     LiveData<List<Food>> loadFood();
 
 }

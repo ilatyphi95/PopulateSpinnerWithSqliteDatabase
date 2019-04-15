@@ -2,6 +2,7 @@ package com.ilatyphi95.populatespinnerwithsqlitedatabase;
 
 import android.arch.persistence.room.Database;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -27,16 +28,22 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean firstLaunch = mPreferences.getBoolean(FIRST_LAUNCH, true);
         if(firstLaunch) {
-            mDb.foodDao().insert(new Food("Pizza"));
-            mDb.foodDao().insert(new Food("Salad"));
-            mDb.foodDao().insert(new Food("Soup"));
-            mDb.foodDao().insert(new Food("Rice with Sauce"));
-            mDb.foodDao().insert(new Food("Noodles"));
-            mDb.foodDao().insert(new Food("Baked Potatoes"));
-            mDb.foodDao().insert(new Food("Bulgar"));
+            List<Food> foods = new ArrayList<>();
+            foods.add(new Food("Pizza"));
+            foods.add(new Food("Salad"));
+            foods.add(new Food("Soup"));
+            foods.add(new Food("Rice with Sauce"));
+            foods.add(new Food("Noodles"));
+            foods.add(new Food("Baked Potatoes"));
+            foods.add(new Food("Bulgar"));
+
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean(FIRST_LAUNCH, false);
             editor.apply();
+
+            new InserAsyncTask(foods);
+
+
         }
 
         List<String> data = new ArrayList<>();
@@ -47,5 +54,21 @@ public class MainActivity extends AppCompatActivity {
 
         spnFoodList.setAdapter(adapter);
 
+    }
+
+    private class InserAsyncTask extends AsyncTask <Void, Void, Void> {
+        List<Food> mFoods;
+        public InserAsyncTask(List<Food> foods) {
+            mFoods = foods;
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for(Food food : mFoods) {
+                mDb.foodDao().insert(food);
+            }
+            return null;
+        }
     }
 }
