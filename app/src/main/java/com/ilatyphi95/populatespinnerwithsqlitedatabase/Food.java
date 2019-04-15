@@ -10,6 +10,6 @@ public class Food {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo(name = "food_type")
-    public String foodType;
+    @ColumnInfo(name = "food_name")
+    public String foodName;
 }
