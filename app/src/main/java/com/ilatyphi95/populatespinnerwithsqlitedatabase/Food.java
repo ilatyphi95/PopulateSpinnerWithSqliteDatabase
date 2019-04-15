@@ -7,9 +7,26 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Food {
 
+    public int getId() {
+        return id;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @ColumnInfo(name = "food_name")
-    public String foodName;
+    private String foodName;
+
+    public Food(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public Food(int id, String foodName) {
+        this(foodName);
+        this.id = id;
+    }
 }
