@@ -4,7 +4,11 @@ import android.arch.persistence.room.Database;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean(FIRST_LAUNCH, false);
             editor.apply();
         }
+
+        List<String> data = new ArrayList<>();
+        data.add("Dummy data");
+
+        ArrayAdapter adapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item, data);
+
+        spnFoodList.setAdapter(adapter);
 
     }
 }
